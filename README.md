@@ -3,7 +3,7 @@
 This is a small web front end for creating certifacates signed by a supplied CA cert and key.
 
 It was written to run on a Raspberry Pi Zero running as a USB Ethernet gadget to provide a 
-"secure" offline CA. Details can be found [here](https://www.hardill.me.uk/wordpress/2020/02/10/a-personal-offline-certifcate-authority/)
+"secure" offline CA. Details can be found [here](https://www.hardill.me.uk/wordpress/2020/02/10/a-personal-offline-certificate-authority/)
 
 ## Configure
 
