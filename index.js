@@ -21,6 +21,9 @@ app.post('/newCert',function(req,res){
 	const csrOptions = opts.csr;
 	const pkcs12Pass = opts.password;
 
+	console.log(csrOptions);
+	console.log(pkcs12Pass)
+
 	openssl.generateRSAPrivateKey({}, function(err, key, cmd){
 		console.log("gen key");
 		console.log(cmd);
@@ -58,7 +61,7 @@ app.post('/newCert',function(req,res){
 					console.log("sign csr")
 					console.log(cmd);
 					console.log("error: ",err);
-					openssl.createPKCS12(crt,key,false,"passw0rd",caCrt,function(err, pfx, cmd){
+					openssl.createPKCS12(crt,key,false,pkcs12Pass,caCrt,function(err, pfx, cmd){
 						console.log("create p12");
 						console.log(cmd)
 						console.log("error: ", err);
