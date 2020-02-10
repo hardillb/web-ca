@@ -1,0 +1,23 @@
+label {
+	display: inline;
+	width: 150px;
+}
+
+input {
+	width: 150px;
+	float: right;	
+}
+
+select {
+	width: 150px;
+	float: right;
+}
+
+.formRow {
+	width: 310px;
+	margin: 5px 0px 5px 0px;
+}
+
+fieldset {
+	width: 320px;
+}
