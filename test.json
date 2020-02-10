@@ -1,5 +1,5 @@
 {
-  "csrOptions": {
+  "csr": {
     "subject": {
       "countryName": "GB",
       "stateOrProvinceName": "Gloucester",
