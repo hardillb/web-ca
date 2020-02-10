@@ -6,36 +6,36 @@
 <body>
 		<div class="formRow">
 			<label for="host">Host:</label>
-			<input type="radio" name="type" id="host" value="host" checked>
+			<input type="radio" name="type" id="host" value="host" checked onclick="typeChanged(this)">
 		</div>
 		<div class="formRow">
 			<label for="person">Person:</label>
-			<input type="radio" name="type" id="person" value="person">
+			<input type="radio" name="type" id="person" value="person" onclick="typeChanged(this)">
 		</div>
 		<div class="formRow">
-			<label for="commonName">Hostname Name:</label>
-			<input type="text" name="commonName">
+			<label id="commonNameField" for="commonName">Hostname Name:</label>
+			<input id="commonName" type="text" name="commonName">
 		</div>
-		<div class="formRow" hidden>
+		<div id="emailField" class="formRow" style="display: none">
 			<label for="emailAddress">Email:</label>
-			<input type="email" name="emailAddress">
+			<input id="emailAddress" type="email" name="emailAddress">
 		</div>
 		<div class="formRow">
 			<label for="organizationName">Org:</label>
-			<input type="text" name="organizationName">
+			<input id="organizationName" type="text" name="organizationName">
 		</div>
 		<div class="formRow">
 			<label for="organizationalUnitName">Unit</label>
-			<input type="text" name="organizationalUnitName">
+			<input id="organizationalUnitName" type="text" name="organizationalUnitName">
 		</div>
 		<div class="formRow">
 			<label for="stateOrProvinceName">State/Province</label>
-			<input type="text" name="stateOrProvinceName">
+			<input id="stateOrProvinceName" type="text" name="stateOrProvinceName">
 		</div>
 
 		<div class="formRow">
 			<label for="country">Country:</label>
-			<select name="country">
+			<select id="countryName" name="country">
 				<option value="AF">Afghanistan</option>
 				<option value="AX">Åland Islands</option>
 				<option value="AL">Albania</option>
@@ -270,7 +270,7 @@
 				<option value="UG">Uganda</option>
 				<option value="UA">Ukraine</option>
 				<option value="AE">United Arab Emirates</option>
-				<option value="GB">United Kingdom</option>
+				<option value="GB" selected="true">United Kingdom</option>
 				<option value="US">United States</option>
 				<option value="UM">United States Minor Outlying Islands</option>
 				<option value="UY">Uruguay</option>
@@ -290,14 +290,89 @@
 
 		<fieldset id="sans">
 			<legend>SANS</legend>
-			<div class="formRow" id="san0">
+			<div class="sanRow" id="san0">
 				<select name="type">
 					<option value="DNS">DNS</option>
 					<option value="IP">IP</option>
 				</select>
 				<input type="text" name="san">
+				<button>-</button>
 			</div>
 		</fieldset>
 		<button>Add SAN</button>
+		<div class="formRow">
+			<label for="caKeyPassword">CA Key password</label>
+			<input id="caKeyPassword" type="password" name="caKeyPassword">
+		</div>
+		<div class="formRow">
+			<label for="exportPassword">Export password</label>
+			<input id="exportPassword" type="password" name="exportPassword">
+		</div>
+		<button onclick="submit()">Submit</button>
+		<script type="text/javascript">
+			
+			function typeChanged(radio) {
+				if (radio.value === "host") {
+					document.getElementById("emailField").style.display = "none";
+					document.getElementById("commonNameField").innerHTML = "Host:";
+				} else if (radio.value === "person") {
+					document.getElementById("emailField").style.display = "block";
+					document.getElementById("commonNameField").innerHTML = "Name:";
+				}
+			}
+
+			function submit() {
+				var payload = {
+					csr: {
+						commonName: document.getElementById("commonName").value,
+						organizationName: document.getElementById("organizationName").value,
+						organizationalUnitName: document.getElementById("organizationalUnitName").value,
+						stateOrProvinceName: document.getElementById("stateOrProvinceName").value,
+						countryName: document.getElementById("countryName").value
+					},
+					"extensions": {
+			      "basicConstraints": {
+			        "critical": true,
+			        "CA": false
+			      }
+			    },
+					exportPassword: document.getElementById("exportPassword").value,
+					caKeyPassword: document.getElementById("caKeyPassword").value
+				}
+				if (document.getElementById("person").checked) {
+					payload.csr.emailAddress = document.getElementById("emailAddress").value;
+				}
+
+				console.log(payload);
+
+				var request = new XMLHttpRequest();
+				request.open('POST', '/newCert', true);
+				request.setRequestHeader('Content-Type', 'application/json');
+				request.responseType = 'blob';
+
+				request.onload = function() {
+					if (request.status == 201) {
+
+						var disposition = request.getResponseHeader('content-disposition');
+						var matches = /"([^"]*)"/.exec(disposition);
+						var filename = (matches != null && matches[1] ? matches[1] : 'client.p12');
+
+						var blob = new Blob([request.response], { type: 'application/x-pkcs12' });
+		        var link = document.createElement('a');
+		        link.href = window.URL.createObjectURL(blob);
+		        link.download = filename;
+
+		        document.body.appendChild(link);
+
+		        link.click();
+
+		        document.body.removeChild(link);
+					}
+				};
+
+				request.send(JSON.stringify(payload));
+			}
+
+		</script>
 </body>
 </html>

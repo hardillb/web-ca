@@ -7,6 +7,7 @@ const opensslCert = require('node-openssl-cert');
 const app = express();
 
 app.use(bodyParser.json());
+app.use(express.static('static'));
 
 const openssl = new opensslCert();
 
@@ -45,6 +46,8 @@ app.post('/newCert',function(req,res){
 						// console.log(cmd)
 						// console.log("error: ", err);
 						res.set("Content-Type", "application/x-pkcs12");
+						res.set("Content-Disposition", 'attachment; filename="cert.p12"');
+						res.status(201);
 						res.send(pfx);
 					});
 				});

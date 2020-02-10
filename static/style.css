@@ -18,6 +18,11 @@ select {
 	margin: 5px 0px 5px 0px;
 }
 
+.sanRow {
+	width: 330px;
+	margin: 5px 0px 5px 0px;
+}
+
 fieldset {
 	width: 320px;
 }
