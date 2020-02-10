@@ -37,7 +37,7 @@ app.post('/newCert',function(req,res){
 				// console.log("getCSRInfo");
 				// console.log(cmd);
 				// console.log("error: ",err);
-				openssl.CASignCSR(csr,{days: 365, extensions: attrs.extensions },false, caCrt, caKey, caKeyPassword, function(err, crt, cmd){
+				openssl.CASignCSR(csr,{days: options.life, extensions: attrs.extensions },false, caCrt, caKey, caKeyPassword, function(err, crt, cmd){
 					// console.log("sign csr")
 					// console.log(cmd);
 					// console.log("error: ",err);
@@ -45,10 +45,12 @@ app.post('/newCert',function(req,res){
 						// console.log("create p12");
 						// console.log(cmd)
 						// console.log("error: ", err);
-						res.set("Content-Type", "application/x-pkcs12");
-						res.set("Content-Disposition", 'attachment; filename="cert.p12"');
-						res.status(201);
-						res.send(pfx);
+						if (!err) {
+							res.set("Content-Type", "application/x-pkcs12");
+							res.set("Content-Disposition", 'attachment; filename="cert.p12"');
+							res.status(201);
+							res.send(pfx);
+						}
 					});
 				});
 			});
@@ -57,6 +59,6 @@ app.post('/newCert',function(req,res){
 	});
 });
 
-app.listen(3000, () => {
+app.listen(options.port, () => {
 	console.log("running");
 })
