@@ -1,0 +1,22 @@
+{
+  "csrOptions": {
+    "subject": {
+      "countryName": "GB",
+      "stateOrProvinceName": "Gloucester",
+      "organizationName": "Hardill",
+      "commonName": "hardill.me.uk"
+    },
+    "extensions": {
+      "basicConstraints": {
+        "critical": true,
+        "CA": false
+      },
+      "SANs": {
+        "DNS": [
+          "hardill.me.uk"
+        ]
+      }
+    }
+  },
+  "password": "passw0rd"
+}

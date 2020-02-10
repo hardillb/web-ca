@@ -13,36 +13,43 @@ const openssl = new opensslCert();
 const caCrt = fs.readFileSync(options.caCertPath, "utf-8");
 const caKey = fs.readFileSync(options.caKeyPath, "utf-8");
 
+console.log(options);
+
 app.post('/newCert',function(req,res){
 
 	const opts = req.body;
+	const csrOptions = opts.csr;
+	const pkcs12Pass = opts.password;
 
 	openssl.generateRSAPrivateKey({}, function(err, key, cmd){
-		//console.log(key);
-		const csrOptions = {
-			subject: {
-				countryName: "GB",
-				stateOrProvinceName: "Gloucester",
-				organizationName: 'Hardill',
-				commonName: "hardill.me.uk"
-			},
-			extensions: {
-				basicConstraints: {
-					critical: true,
-					CA: false
-				},
-				SANs: {
-					DNS: [
-						'hardill.me.uk'
-					]
-				}
-			}
-		};
+		console.log("gen key");
+		console.log(cmd);
+		console.log("error: ", err);
+		// const csrOptions = {
+		// 	subject: {
+		// 		countryName: "GB",
+		// 		stateOrProvinceName: "Gloucester",
+		// 		organizationName: 'Hardill',
+		// 		commonName: "hardill.me.uk"
+		// 	},
+		// 	extensions: {
+		// 		basicConstraints: {
+		// 			critical: true,
+		// 			CA: false
+		// 		},
+		// 		SANs: {
+		// 			DNS: [
+		// 				'hardill.me.uk'
+		// 			]
+		// 		}
+		// 	}
+		// };
 
 		openssl.generateCSR(csrOptions, key, false, function(err, csr, cmd) {
 			console.log("generte csr")
+			console.log(cmd);
 			console.log("error: ", err);
-			//console.log(csr);
+			console.log(csr);
 			openssl.getCSRInfo(csr, function(err, attrs, cmd) {
 				console.log("getCSRInfo");
 				console.log(cmd);
@@ -51,7 +58,7 @@ app.post('/newCert',function(req,res){
 					console.log("sign csr")
 					console.log(cmd);
 					console.log("error: ",err);
-					openssl.createPKCS12(crt,key,"","passw0rd",caCrt,function(err, pfx, cmd){
+					openssl.createPKCS12(crt,key,false,"passw0rd",caCrt,function(err, pfx, cmd){
 						console.log("create p12");
 						console.log(cmd)
 						console.log("error: ", err);

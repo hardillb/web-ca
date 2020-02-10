@@ -2,4 +2,3 @@ node_modules/
 ca.key
 ca.crt
 test.p12
-test.crt
