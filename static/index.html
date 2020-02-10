@@ -324,11 +324,13 @@
 			function submit() {
 				var payload = {
 					csr: {
-						commonName: document.getElementById("commonName").value,
-						organizationName: document.getElementById("organizationName").value,
-						organizationalUnitName: document.getElementById("organizationalUnitName").value,
-						stateOrProvinceName: document.getElementById("stateOrProvinceName").value,
-						countryName: document.getElementById("countryName").value
+						subject: {
+							commonName: document.getElementById("commonName").value,
+							organizationName: document.getElementById("organizationName").value,
+							organizationalUnitName: document.getElementById("organizationalUnitName").value,
+							stateOrProvinceName: document.getElementById("stateOrProvinceName").value,
+							countryName: document.getElementById("countryName").value
+						}
 					},
 					"extensions": {
 			      "basicConstraints": {
@@ -340,7 +342,7 @@
 					caKeyPassword: document.getElementById("caKeyPassword").value
 				}
 				if (document.getElementById("person").checked) {
-					payload.csr.emailAddress = document.getElementById("emailAddress").value;
+					payload.csr.subject.emailAddress = document.getElementById("emailAddress").value;
 				}
 
 				console.log(payload);
