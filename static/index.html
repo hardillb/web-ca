@@ -309,6 +309,11 @@
 			<input id="exportPassword" type="password" name="exportPassword">
 		</div>
 		<button onclick="submit()">Submit</button>
+		<div id="console">
+			<pre id="cmd"></pre>
+			<br>
+			<pre id="error"></pre>
+		</div>
 		<script type="text/javascript">
 			
 			function typeChanged(radio) {
@@ -369,6 +374,15 @@
 		        link.click();
 
 		        document.body.removeChild(link);
+					} else if (request.status == 500) {
+						var reader = new FileReader();
+						reader.addEventListener('loadend', (e) => {
+							var error = JSON.parse(e.srcElement.result);
+							document.getElementById("cmd").innerHTML = JSON.stringify(error.cmd, null, 2);
+							document.getElementById("error").innerHTML = error.err;
+							console.log(error);
+						});
+						reader.readAsText(request.response);
 					}
 				};
 

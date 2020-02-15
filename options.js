@@ -1,7 +1,8 @@
 module.exports = {
-	caCertPath: "./ca.crt",
-	caKeyPath: "./ca.key",
+	caPath: "./ca",
+	caCertPath: "./ca/ca.crt",
+	caKeyPath: "./ca/ca.key",
 	life: 365,
-	port: 80
+	port: 3000
 }
 
