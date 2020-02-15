@@ -28,6 +28,14 @@ Just point your browser at the correct host/port and then pick from either a hos
 certificate. Fill in the required fields including the passphrase for the CA key and a 
 passsphase for the output P12 file.
 
+## Running
+
+To allow running as a normal user and still binding to port 80 run the following.
+
+```
+sudo setcap CAP_NET_BIND_SERVICE=+eip `which node`
+```
+
 ## TODO
 
 - ~~Add a LOT of error handling~~
