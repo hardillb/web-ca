@@ -11,8 +11,9 @@ You can configure the service by editing the `options.js` file
 
 ```
 module.exports = {
-	caCertPath: "./ca.crt",
-	caKeyPath: "./ca.key",
+	caPath: "./ca".
+	caCertPath: "./ca/ca.crt",
+	caKeyPath: "./ca/ca.key",
 	life: 365,
 	port: 80
 }
@@ -29,7 +30,7 @@ passsphase for the output P12 file.
 
 ## TODO
 
-- Add a LOT of error handling
+- ~~Add a LOT of error handling~~
 - Allow the uploading of an old cert (to extract the Subject info) to create new
 - Add more constraints to cert types
-- Add support to update CA serial/csr data
+- ~~Add support to update CA serial/csr data~~
