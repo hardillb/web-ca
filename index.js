@@ -79,7 +79,8 @@ app.post('/newCert',function(req,res){
 						console.log("create p12");
 						if (!err) {
 							res.set("Content-Type", "application/x-pkcs12");
-							res.set("Content-Disposition", 'attachment; filename="cert.p12"');
+							var filename = csrOptions.subject.commonName + ".p12";
+							res.set("Content-Disposition", 'attachment; filename="' + filename + '"');
 							res.status(201);
 							res.send(pfx);
 						} else {

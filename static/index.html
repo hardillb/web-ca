@@ -335,19 +335,41 @@
 							organizationalUnitName: document.getElementById("organizationalUnitName").value,
 							stateOrProvinceName: document.getElementById("stateOrProvinceName").value,
 							countryName: document.getElementById("countryName").value
-						}
-					},
-					"extensions": {
-			      "basicConstraints": {
-			        "critical": true,
-			        "CA": false
-			      }
+						},
+						extensions: {
+				      basicConstraints: {
+				        critical: true,
+				        CA: false
+				      },
+				      keyUsage: {
+								critical: true,
+								usages: [
+									'digitalSignature',
+									'keyEncipherment'
+								]
+							},
+				      extendedKeyUsage: {
+								critical: true
+							}
+						},
+						hash: 'sha256'
 			    },
 					exportPassword: document.getElementById("exportPassword").value,
 					caKeyPassword: document.getElementById("caKeyPassword").value
 				}
 				if (document.getElementById("person").checked) {
 					payload.csr.subject.emailAddress = document.getElementById("emailAddress").value;
+					payload.csr.extensions.extendedKeyUsage.usages = [
+						'clientAuth',
+						'emailProtection'
+					];
+				} else {
+					payload.csr.extensions.SANs = {
+						DNS: [document.getElementById("commonName").value]
+					};
+					payload.csr.extensions.extendedKeyUsage.usages = [
+						'serverAuth'
+					];
 				}
 
 				console.log(payload);
