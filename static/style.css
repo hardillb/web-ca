@@ -23,6 +23,16 @@ select {
 	margin: 5px 0px 5px 0px;
 }
 
+#cainfo {
+	padding: 10px;
+}
+
+#certType {
+	border-style: solid;
+	border-width: 1px;
+	width: 330px;
+}
+
 fieldset {
 	width: 320px;
 }

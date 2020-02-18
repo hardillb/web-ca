@@ -9,7 +9,7 @@ const optionsDefs = [
 
 const options = commandLineArgs(optionsDefs);
 
-var keyPassword = "verySecretPassword";
+var keyPassword = undefined;
 var caPath = "./ca";
 
 if (!options.caKeyPassword) {

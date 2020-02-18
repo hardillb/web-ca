@@ -100,6 +100,11 @@ app.post('/newCert',function(req,res){
 	});
 });
 
+app.get('/getCACert', function(req,res){
+	res.set("Content-Type", "application/x-pem-file");
+	res.send(caCrt);
+});
+
 app.listen(options.port, () => {
 	console.log("running");
 })

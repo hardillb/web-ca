@@ -4,13 +4,20 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-		<div class="formRow">
-			<label for="host">Host:</label>
-			<input type="radio" name="type" id="host" value="host" checked onclick="typeChanged(this)">
+	<h1>Private CA Appliance</h1>
+		<div id="cainfo">
+			<a href="/getCACert">Download CA cert</a>
 		</div>
-		<div class="formRow">
-			<label for="person">Person:</label>
-			<input type="radio" name="type" id="person" value="person" onclick="typeChanged(this)">
+		<div id="certType">
+			Certificate Type
+			<div class="formRow">
+				<label for="host">Host:</label>
+				<input type="radio" name="type" id="host" value="host" checked onclick="typeChanged(this)">
+			</div>
+			<div class="formRow">
+				<label for="person">Person:</label>
+				<input type="radio" name="type" id="person" value="person" onclick="typeChanged(this)">
+			</div>
 		</div>
 		<div class="formRow">
 			<label id="commonNameField" for="commonName">Hostname Name:</label>
