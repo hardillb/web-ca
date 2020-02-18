@@ -1,9 +1,11 @@
 {
   "name": "web-ca",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "createCA": "node createCA.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -14,6 +16,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "command-line-args": "^5.1.1",
     "express": "^4.17.1",
     "node-openssl-cert": "^0.1.6"
   }

@@ -327,6 +327,9 @@
 			}
 
 			function submit() {
+				document.getElementById("cmd").innerHTML = "";
+				document.getElementById("error").innerHTML = "";
+
 				var payload = {
 					csr: {
 						subject: {
