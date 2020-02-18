@@ -30,6 +30,8 @@ To allow running as a normal user and still binding to port 80 run the following
 sudo setcap CAP_NET_BIND_SERVICE=+eip `which node`
 ```
 
+Be aware this will allow ANY nodejs app to bind to system ports.
+
 If you need to create a new CA cert then you can edit the `createCA.js` file to set the DN information for the CA
 and then run:
 
