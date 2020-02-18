@@ -52,7 +52,8 @@ passsphase for the output P12 file.
 
 ## TODO
 
+- build OpenVPN client config files
 - ~~Add a LOT of error handling~~
-- Allow the uploading of an old cert (to extract the Subject info) to create new
+- ~~Allow the uploading of an old cert (to extract the Subject info) to create new~~ (not possible as needs priv key)
 - ~~Add more constraints to cert types~~
 - ~~Add support to update CA serial/csr data~~
