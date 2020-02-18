@@ -15,6 +15,8 @@ var caPath = "./ca";
 if (!options.caKeyPassword) {
 	console.log("You need to supply a CA Key pssword ('-p <password>')")
 	process.exit(-1);
+} else {
+	keyPassword = options.caKeyPassword;
 }
 
 if (options.caPath) {
