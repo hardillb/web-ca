@@ -1,6 +1,6 @@
 {
   "name": "web-ca",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,7 @@
     "ca"
   ],
   "author": "hardillb@gmail.com",
+  "private": true,
   "license": "Apache-2.0",
   "dependencies": {
     "body-parser": "^1.19.0",

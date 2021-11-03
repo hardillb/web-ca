@@ -1,14 +1,14 @@
-label {
+div.formRow label {
 	display: inline;
 	width: 150px;
 }
 
-input {
+div.formRow input {
 	width: 150px;
 	float: right;	
 }
 
-select {
+div.formRow select {
 	width: 150px;
 	float: right;
 }

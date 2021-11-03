@@ -12,6 +12,12 @@ app.use(express.static('static'));
 const openssl = new opensslCert();
 
 const caCrt = fs.readFileSync(options.caCertPath, "utf-8");
+let caChain;
+if (options.caChainPath) {
+	caChain = fs.readFileSync(options.caChainPath, "utf-8");
+} else {
+	caChain = caCrt;
+}
 const caKey = fs.readFileSync(options.caKeyPath, "utf-8");
 
 console.log(options);
@@ -66,6 +72,7 @@ app.post('/newCert',function(req,res){
 				openssl.CASignCSR(csr,{days: options.life, extensions: attrs.extensions },options.caPath, caCrt, caKey, caKeyPassword, function(err, crt, cmd){
 					console.log("sign csr")
 					if (err) {
+						console.log(csr);
 						console.log(cmd);
 						console.log(err);
 						var error = {
@@ -75,7 +82,7 @@ app.post('/newCert',function(req,res){
 						res.status(500).send(error);
 						return;
 					}
-					openssl.createPKCS12(crt,key,false,pkcs12Pass,caCrt,function(err, pfx, cmd){
+					openssl.createPKCS12(crt,key,false,pkcs12Pass,caChain,function(err, pfx, cmd){
 						console.log("create p12");
 						if (!err) {
 							res.set("Content-Type", "application/x-pkcs12");
@@ -102,7 +109,8 @@ app.post('/newCert',function(req,res){
 
 app.get('/getCACert', function(req,res){
 	res.set("Content-Type", "application/x-pem-file");
-	res.send(caCrt);
+	res.set('Content-Disposition: attachment; filename="ca.pem"');
+	res.send(caChain);
 });
 
 app.listen(options.port, () => {
