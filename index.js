@@ -7,6 +7,7 @@ const opensslCert = require('node-openssl-cert');
 const app = express();
 
 app.use(bodyParser.json());
+app.set("view engine", "ejs");
 app.use(express.static('static'));
 
 const openssl = new opensslCert();
@@ -21,6 +22,10 @@ if (options.caChainPath) {
 const caKey = fs.readFileSync(options.caKeyPath, "utf-8");
 
 console.log(options);
+
+app.get('/', function(req,res){
+	res.render('index.ejs', {life: options.life})
+})
 
 app.post('/newCert',function(req,res){
 
@@ -69,7 +74,7 @@ app.post('/newCert',function(req,res){
 					res.status(500).send(error);
 					return;
 				}
-				openssl.CASignCSR(csr,{days: options.life, extensions: attrs.extensions },options.caPath, caCrt, caKey, caKeyPassword, function(err, crt, cmd){
+				openssl.CASignCSR(csr,{days: opts.life, extensions: attrs.extensions },options.caPath, caCrt, caKey, caKeyPassword, function(err, crt, cmd){
 					console.log("sign csr")
 					if (err) {
 						console.log(csr);

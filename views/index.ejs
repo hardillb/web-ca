@@ -295,6 +295,11 @@
       </select>
     </div>
 
+    <div class="formRow">
+      <label for="age">Age (days):</label>
+      <input type="number" name="age" id="age" value="<%= life %>">
+    </div>
+
     <fieldset id="sans" >
       <legend>SANs</legend>
       <button onclick="addSAN()">Add SAN</button>
@@ -372,7 +377,8 @@
             hash: 'sha256'
           },
           exportPassword: document.getElementById("exportPassword").value,
-          caKeyPassword: document.getElementById("caKeyPassword").value
+          caKeyPassword: document.getElementById("caKeyPassword").value,
+          life: document.getElementById("age").value
         }
         if (document.getElementById("person").checked) {
           payload.csr.subject.emailAddress = document.getElementById("emailAddress").value;
